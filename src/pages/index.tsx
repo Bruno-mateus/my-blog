@@ -1,11 +1,11 @@
 import { Button } from "@/components/Button";
 import { Post } from "@/components/Post";
 import { Container } from "@/components/Container";
-import { GetServerSideProps, GetStaticProps } from "next";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { GetStaticProps } from "next";
+import { useQuery } from "@tanstack/react-query";
 import { getFilteredPost, getPosts } from "@/api";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PostData } from "@/types";
 import { Loading } from "@/components/Loading";
 

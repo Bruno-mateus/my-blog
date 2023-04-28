@@ -29,7 +29,7 @@ export default function ScrollTop() {
       className="fixed z-10 bottom-6 right-4 md:bottom-8 md:right-20 bg-black animate-bounce text-gray-100  p-2 rounded-full text-1xl	"
       style={{ display: visible ? "inline" : "none" }}
     >
-      <ArrowUp />
+      <ArrowUp size={26} />
     </button>
   );
 }

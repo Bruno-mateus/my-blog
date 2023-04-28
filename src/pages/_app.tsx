@@ -5,6 +5,8 @@ import type { AppProps } from 'next/app'
 import { ThemeProvider } from "next-themes";
 import { Inter, Poppins } from "next/font/google";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { DefaultSeo } from "next-seo";
+import { Metadata } from "next";
 
 const poppins = Poppins({
   variable: "--poppins-font",
@@ -26,6 +28,15 @@ export default function App({ Component, pageProps }: AppProps) {
         <div className={`${inter.variable} ${poppins.variable}`}>
           <Header />
           <ScrollTop />
+          <DefaultSeo
+            title="Bruno Mateus Dev"
+            openGraph={{
+              type: "website",
+              locale: "pt-BR",
+              url: "https://www.url.ie/",
+              siteName: "Bruno Mateus DEV",
+            }}
+          />
           <Component {...pageProps} />
         </div>
       </QueryClientProvider>
