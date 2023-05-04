@@ -25,7 +25,9 @@ export default function Post({ post }: { post: PostData }, isLoading: boolean) {
           <Loading />
         ) : (
           <>
-            <h1 className="text-4xl">{post.attributes.title}</h1>
+            <h1 className="text-2xl text-center md:text-3xl">
+              {post.attributes.title}
+            </h1>
             <Image
               className=" h-full object-cover mt-8 "
               src={post.attributes.cover.data.attributes.url}

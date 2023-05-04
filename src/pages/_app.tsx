@@ -35,6 +35,8 @@ export default function App({ Component, pageProps }: AppProps) {
               locale: "pt-BR",
               url: "https://www.url.ie/",
               siteName: "Bruno Mateus DEV",
+              description:
+                "blog com tópicos interessantes sobre o universo javascript...",
             }}
           />
           <Component {...pageProps} />
