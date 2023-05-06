@@ -7,6 +7,8 @@ import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { PostData } from "@/types";
 import { Loading } from "@/components/Loading";
 import { NextSeo } from "next-seo";
+import format from "date-fns/format";
+import ptBR from "date-fns/locale/pt-BR";
 
 type Params = {
   postId: string | undefined;
@@ -28,6 +30,11 @@ export default function Post({ post }: { post: PostData }, isLoading: boolean) {
             <h1 className="text-2xl text-center md:text-3xl">
               {post.attributes.title}
             </h1>
+            <small>
+              {format(new Date(post.attributes.createdAt), "PPPP", {
+                locale: ptBR,
+              })}
+            </small>
             <Image
               className=" h-full object-cover mt-8 "
               src={post.attributes.cover.data.attributes.url}

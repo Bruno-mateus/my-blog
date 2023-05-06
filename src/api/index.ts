@@ -8,11 +8,22 @@ const identifier = process.env.IDENTIFIER;
 const password = process.env.PASSWORD;
 
 export async function getPosts() {
-  const response = await axios.get(`${apiPosts}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+
+const qs = require("qs");
+const query = qs.stringify(
+  {
+    sort: ["id:desc"],
+  },
+  {
+    encodeValuesOnly: true,
+  }
+);
+
+const response = await axios.get(`${apiPosts}&${query}`, {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
 
   return response.data.data;
 }
