@@ -10,7 +10,6 @@ import { PostData } from "@/types";
 import { Loading } from "@/components/Loading";
 
 export default function Home({ posts }: { posts: PostData[] }) {
-  const [queryFilterPosts, setQueryFilterPosts] = useState<string>("");
   const [filteredPosts, setFilteredPosts] = useState<PostData[]>([]);
 
   const {
@@ -26,12 +25,12 @@ export default function Home({ posts }: { posts: PostData[] }) {
     staleTime: Infinity,
   });
 
-  function handleSearch() {
+  function handleSearch(query:string) {
     setFilteredPosts(
       postsData.filter((post) =>
         post.attributes.title
           .toLowerCase()
-          .includes(queryFilterPosts.toLocaleLowerCase())
+          .includes(query.toLocaleLowerCase())
       )
     );
   }
@@ -41,21 +40,14 @@ export default function Home({ posts }: { posts: PostData[] }) {
       <Container>
         <form
           className="flex"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSearch();
-          }}
         >
           <input
             type="search"
             placeholder="Pesquise um post"
-            className="w-full rounded-s-lg p-4 bg-gray-300 dark:bg-gray-800"
-            onChange={(e) => setQueryFilterPosts(e.target.value)}
+            className="w-full rounded-lg p-4 bg-gray-300 dark:bg-gray-800"
+            onChange={(e) => handleSearch(e.target.value)}
           />
-          <Button
-            className="bg-gray-950 rounded-e-lg text-gray-100"
-            title="Pesquisar"
-          />
+        
         </form>
         {isLoading || isFetching ? (
           <Loading />
@@ -101,6 +93,6 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       posts,
     },
-    revalidate: 60,
+    revalidate: 60*10,
   };
 };
