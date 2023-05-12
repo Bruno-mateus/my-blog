@@ -6,7 +6,8 @@ import { ThemeProvider } from "next-themes";
 import { Inter, Poppins } from "next/font/google";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DefaultSeo } from "next-seo";
-import { Metadata } from "next";
+import { Analytics } from '@vercel/analytics/react';
+
 
 const poppins = Poppins({
   variable: "--poppins-font",
@@ -36,10 +37,11 @@ export default function App({ Component, pageProps }: AppProps) {
               url: "https://www.url.ie/",
               siteName: "Bruno Mateus DEV",
               description:
-                "blog com tópicos interessantes sobre o universo javascript...",
+                "blog com tópicos interessantes sobre o universo da programção com javascript...",
             }}
           />
           <Component {...pageProps} />
+          <Analytics />
         </div>
       </QueryClientProvider>
     </ThemeProvider>
