@@ -3,7 +3,7 @@ import { Post } from "@/components/Post";
 import { Container } from "@/components/Container";
 import { GetStaticProps } from "next";
 import { useQuery } from "@tanstack/react-query";
-import { getFilteredPost, getPosts } from "@/api";
+import { getPosts } from "@/api";
 
 import { useState } from "react";
 import { PostData } from "@/types";
@@ -11,6 +11,7 @@ import { Loading } from "@/components/Loading";
 
 export default function Home({ posts }: { posts: PostData[] }) {
   const [queryFilterPosts, setQueryFilterPosts] = useState<string>("");
+  const [filteredPosts, setFilteredPosts] = useState<PostData[]>([]);
 
   const {
     isLoading,
@@ -22,23 +23,18 @@ export default function Home({ posts }: { posts: PostData[] }) {
     initialData: posts,
     keepPreviousData: true,
     refetchOnWindowFocus: false,
-    staleTime: 30000,
+    staleTime: Infinity,
   });
 
-  const {
-    data: filteredPosts,
-    isFetching: isFetchingFilter,
-    isLoading: isLoadingFilter,
-    refetch,
-  } = useQuery<PostData[]>({
-    queryKey: ["filteredPosts", queryFilterPosts],
-    queryFn: async () => await getFilteredPost(queryFilterPosts),
-    initialData: [] as PostData[],
-    refetchOnWindowFocus: false,
-    enabled: false,
-    keepPreviousData: true,
-    staleTime: 30000,
-  });
+  function handleSearch() {
+    setFilteredPosts(
+      postsData.filter((post) =>
+        post.attributes.title
+          .toLowerCase()
+          .includes(queryFilterPosts.toLocaleLowerCase())
+      )
+    );
+  }
 
   return (
     <>
@@ -47,7 +43,7 @@ export default function Home({ posts }: { posts: PostData[] }) {
           className="flex"
           onSubmit={(e) => {
             e.preventDefault();
-            refetch();
+            handleSearch();
           }}
         >
           <input
@@ -61,10 +57,10 @@ export default function Home({ posts }: { posts: PostData[] }) {
             title="Pesquisar"
           />
         </form>
-        {isLoading || isFetching || isFetchingFilter || isLoadingFilter ? (
+        {isLoading || isFetching ? (
           <Loading />
         ) : (
-          <section className="mt-8 flex flex-col gap-10">
+          <div className="mt-8 flex flex-col gap-10">
             {filteredPosts.length > 0
               ? filteredPosts.map((post) => {
                   return (
@@ -92,7 +88,7 @@ export default function Home({ posts }: { posts: PostData[] }) {
                     />
                   );
                 })}
-          </section>
+          </div>
         )}
       </Container>
     </>

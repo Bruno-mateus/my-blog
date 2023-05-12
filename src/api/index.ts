@@ -38,23 +38,4 @@ export async function getAPost(postId: string | undefined) {
   return response.data.data;
 }
 
-export async function getFilteredPost(query?: string) {
-  const title = qs.stringify({
-    filters: {
-      title: {
-        $containsi: query,
-      },
-    },
-    encodeValuesOnly: true,
-  });
 
-  const response = await axios.get(
-    `https://blog-bruno.onrender.com/api/posts?populate=*&${title}`,
-    {
-      identifier,
-      password,
-    }
-  );
-
-  return response.data.data;
-}

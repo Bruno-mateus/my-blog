@@ -10,7 +10,7 @@ interface PostProps {
 
 export function Post({ content, image, title, postId }: PostProps) {
   return (
-    <>
+    <div>
       <Link
         href={`/post/${postId}`}
         className="flex max-w-3xl h-32 items-center m-auto  gap-2"
@@ -31,6 +31,6 @@ export function Post({ content, image, title, postId }: PostProps) {
           </p>
         </div>
       </Link>
-    </>
+    </div>
   );
 }
